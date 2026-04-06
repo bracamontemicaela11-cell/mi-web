@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oliv Studio Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#F8F4EE;
+      --beige:#EFE7DA;
+      --dark:#2A2A2A;
+      --olive:#6B7A5A;
+      --olive-dark:#4A5840;
+      --olive-light:#A3B596;
+      --gold:#B8972E;
+      --gray:#888;
+      --white:#FFFFFF;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
+
+    /* ─── NAV ─── */
+    nav{
+      position:fixed;top:0;width:100%;z-index:999;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.9rem 5%;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid #eee;
+    }
+    nav img{height:50px;width:auto}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dark);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--olive)}
+    .nav-cta{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.7rem 1.8rem;background:var(--dark);color:var(--white);text-decoration:none;transition:background .25s}
+    .nav-cta:hover{background:var(--olive-dark)}
+    @media(max-width:860px){.nav-links,.nav-cta{display:none}}
+
+    /* ─── HERO ─── */
+    .hero{
+      min-height:100vh;
+      padding:130px 5% 80px;
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      background:var(--white);
+    }
+    .tag{font-size:.58rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--olive);margin-bottom:1.4rem}
+    .hero h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(3.6rem,8vw,7.5rem);
+      font-weight:900;line-height:1;
+      max-width:960px;margin-bottom:.8rem;
+    }
+    .hero h1 em{font-style:italic;font-weight:400;color:var(--olive)}
+    .hero-sub{
+      font-family:'Playfair Display',serif;font-style:italic;
+      font-size:clamp(1rem,2.2vw,1.5rem);color:var(--gray);
+      margin-bottom:1.6rem;
+    }
+    .hero-body{font-size:.88rem;line-height:1.85;color:var(--dark);max-width:560px;margin-bottom:2.5rem}
+    .hero-body strong{font-weight:700}
+    .btn-main{display:inline-block;padding:1.1rem 3.2rem;background:var(--dark);color:var(--white);font-size:.68rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;transition:all .3s}
+    .btn-main:hover{background:var(--olive-dark);transform:translateY(-2px)}
+
+    /* Mockup grid */
+    .hero-mockup{
+      width:100%;max-width:840px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+      padding:14px;background:var(--beige);
+      margin:3rem auto 2.5rem;
+    }
+    .mc{
+      aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+      font-size:1.6rem;background:var(--white);
+    }
+    .mc.o{background:rgba(107,122,90,.12)}
+    .mc.g{background:rgba(184,151,46,.09)}
+    .mc.b{background:rgba(107,122,90,.06)}
+
+    .hero-divider{
+      font-size:.58rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--dark);display:flex;align-items:center;gap:1rem;
+      width:100%;max-width:640px;margin-bottom:1rem;
+    }
+    .hero-divider::before,.hero-divider::after{content:'';flex:1;height:1px;background:#ddd}
+    .hero-stats{font-size:.84rem;color:var(--dark);line-height:2}
+    .hero-stats strong{font-weight:700}
+
+    /* ─── TICKER ─── */
+    .ticker{background:var(--dark);padding:.85rem 0;overflow:hidden}
+    .ticker-track{display:flex;width:max-content;animation:scroll 32s linear infinite}
+    .ti{font-size:.57rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.7);padding:0 2rem;white-space:nowrap}
+    .ti span{color:var(--olive)}
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ─── TAGLINE BAND ─── */
+    .tagline{background:var(--cream);padding:3.5rem 5%;text-align:center;border-bottom:1px solid var(--beige)}
+    .tagline p:first-child{font-size:.6rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--dark);margin-bottom:.8rem}
+    .tagline p:last-child{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2vw,1.45rem);color:var(--gray);max-width:700px;margin:0 auto;line-height:1.6}
+
+    /* ─── SECTIONS ─── */
+    .s{padding:7rem 5%}
+    .sw{background:var(--white)}
+    .sc{background:var(--cream)}
+    .sd{background:var(--dark);color:var(--white)}
+    .w{max-width:1140px;margin:0 auto}
+
+    .eye{font-size:.57rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:.9rem}
+    .sd .eye{color:var(--olive-light)}
+    .h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;line-height:1.05}
+    .h2 em{font-style:italic;font-weight:400;color:var(--olive)}
+    .sd .h2{color:var(--white)}
+    .sd .h2 em{color:var(--olive-light)}
+    .hc{text-align:center;margin:0 auto;max-width:820px}
+    .sub{font-size:.87rem;line-height:1.85;color:var(--gray);max-width:560px;margin-top:1rem}
+    .sd .sub{color:rgba(255,255,255,.58)}
+    .subc{margin-left:auto;margin-right:auto;text-align:center}
+
+    .btn-d{display:inline-block;padding:1rem 2.6rem;background:var(--dark);color:var(--white);font-size:.63rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;transition:all .3s}
+    .btn-d:hover{background:var(--olive-dark);transform:translateY(-2px)}
+    .btn-o{display:inline-block;padding:1rem 2.6rem;background:transparent;border:2px solid var(--dark);color:var(--dark);font-size:.63rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;transition:all .3s}
+    .btn-o:hover{background:var(--dark);color:var(--white)}
+
+    /* ─── SERVICIOS intro ─── */
+    .serv-top{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-bottom:5rem}
+    .serv-vis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .sv{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--beige)}
+    .sv.o{background:rgba(107,122,90,.14)}
+    .sv.g{background:rgba(184,151,46,.1)}
+    @media(max-width:860px){.serv-top{grid-template-columns:1fr}.serv-vis{display:none}}
+
+    /* ─── SERVICIOS grid ─── */
+    .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e0d8ce}
+    @media(max-width:860px){.serv-grid{grid-template-columns:1fr}}
+    .sc-card{background:var(--white);padding:2.8rem 2.4rem;position:relative;overflow:hidden;transition:background .3s}
+    .sc-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:3px;background:var(--olive);transition:width .5s}
+    .sc-card:hover::after{width:100%}
+    .sc-card:hover{background:var(--cream)}
+    .sc-n{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:900;color:#f0ebe3;line-height:1;margin-bottom:.6rem}
+    .sc-icon{font-size:1.6rem;margin-bottom:.7rem}
+    .sc-title{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dark);margin-bottom:.7rem}
+    .sc-body{font-size:.84rem;color:var(--gray);line-height:1.75}
+
+    /* ─── TODOS LOS SERVICIOS ─── */
+    .all-serv{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:#e8e0d4}
+    @media(max-width:860px){.all-serv{grid-template-columns:1fr}}
+    .as-item{background:var(--white);padding:2.2rem 2.4rem;display:flex;align-items:flex-start;gap:1.4rem;transition:background .3s}
+    .as-item:hover{background:var(--cream)}
+    .as-icon{font-size:1.5rem;min-width:44px;height:44px;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .as-title{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dark);margin-bottom:.4rem}
+    .as-body{font-size:.82rem;color:var(--gray);line-height:1.65}
+
+    /* ─── SOBRE ─── */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    @media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+    .about-frame{aspect-ratio:3/4;background:linear-gradient(145deg,rgba(107,122,90,.22),rgba(74,88,64,.32));display:flex;align-items:center;justify-content:center;position:relative}
+    .about-frame::after{content:'';position:absolute;bottom:-12px;right:-12px;width:66%;height:66%;border:2px solid rgba(107,122,90,.3);z-index:-1}
+    .af-inner{font-family:'Playfair Display',serif;font-size:7rem;font-weight:300;color:rgba(255,255,255,.1)}
+    @media(max-width:860px){.about-frame{display:none}}
+    .about-q{border-left:3px solid var(--olive-light);padding-left:1.4rem;margin:2rem 0}
+    .about-q p{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:rgba(255,255,255,.9);line-height:1.5}
+    .about-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);margin-top:2rem}
+    .an{background:var(--dark);padding:1.5rem 1rem;text-align:center}
+    .an-n{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--olive-light);display:block;line-height:1}
+    .an-l{font-size:.55rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.35rem;display:block}
+
+    /* ─── TESTIMONIOS ─── */
+    .th{text-align:center;margin-bottom:4rem}
+    .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e5e5e5}
+    @media(max-width:860px){.tgrid{grid-template-columns:1fr}}
+    .tc{background:var(--white);padding:3rem 2.4rem;transition:background .3s}
+    .tc:hover{background:var(--cream)}
+    .tc-stars{color:var(--gold);font-size:.8rem;margin-bottom:.6rem}
+    .tc-q{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--beige);line-height:.8;margin-bottom:.4rem}
+    .tc-txt{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;line-height:1.7;color:var(--dark);margin-bottom:2rem}
+    .tc-txt strong{font-style:normal;font-weight:700}
+    .tc-line{width:36px;height:2px;background:var(--olive);margin-bottom:1rem}
+    .tc-name{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .tc-role{font-size:.67rem;color:var(--gray);margin-top:.2rem}
+
+    /* ─── PRECIOS ─── */
+    .ph{text-align:center;margin-bottom:4.5rem}
+    .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#e5e5e5;max-width:980px;margin:0 auto}
+    @media(max-width:860px){.pgrid{grid-template-columns:1fr}}
+    .pc{background:var(--white);padding:3rem 2.4rem;position:relative;transition:transform .3s}
+    .pc:hover{transform:translateY(-5px)}
+    .pc.feat{background:var(--dark);color:var(--white)}
+    .pb{position:absolute;top:0;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--olive);color:var(--white);font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.35rem 1.2rem;white-space:nowrap}
+    .pp{font-size:.56rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:1.4rem}
+    .feat .pp{color:var(--olive-light)}
+    .pa{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:900;line-height:1;color:var(--dark)}
+    .feat .pa{color:var(--white)}
+    .pm{font-size:.68rem;color:var(--gray);margin:.3rem 0 1.4rem}
+    .feat .pm{color:rgba(255,255,255,.4)}
+    .pdiv{width:100%;height:1px;background:#eee;margin:0 0 1.4rem}
+    .feat .pdiv{background:rgba(255,255,255,.1)}
+    .pd{font-size:.8rem;color:var(--gray);line-height:1.6;margin-bottom:1.4rem}
+    .feat .pd{color:rgba(255,255,255,.5)}
+    .pl{list-style:none;margin-bottom:2.2rem}
+    .pl li{font-size:.78rem;padding:.55rem 0;border-bottom:1px solid #f5f0e8;display:flex;align-items:center;gap:.55rem;color:var(--dark)}
+    .feat .pl li{border-color:rgba(255,255,255,.08);color:rgba(255,255,255,.8)}
+    .pl li::before{content:'✓';color:var(--olive);font-weight:700;font-size:.7rem;flex-shrink:0}
+    .feat .pl li::before{color:var(--olive-light)}
+    .pbtn{display:block;width:100%;padding:1rem;font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-align:center;border:2px solid var(--dark);background:transparent;color:var(--dark);cursor:pointer;transition:all .3s;text-decoration:none}
+    .feat .pbtn{border-color:var(--white);background:var(--white);color:var(--dark)}
+    .pbtn:hover{background:var(--dark);color:var(--white)}
+    .feat .pbtn:hover{background:var(--olive-dark);border-color:var(--olive-dark);color:var(--white)}
+
+    /* ─── CTA ─── */
+    .cta{background:var(--cream);padding:9rem 5%;text-align:center;position:relative;overflow:hidden}
+    .cta-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:clamp(8rem,20vw,18rem);font-weight:900;color:rgba(107,122,90,.05);white-space:nowrap;user-select:none;pointer-events:none;letter-spacing:.05em}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem}
+
+    /* ─── FOOTER ─── */
+    footer{background:var(--dark);padding:2.5rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+    footer img{height:34px;filter:brightness(0) invert(1);opacity:.55}
+    footer p{font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:.06em}
+    .fl{display:flex;gap:1.8rem}
+    .fl a{font-size:.57rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.32);text-decoration:none;transition:color .25s}
+    .fl a:hover{color:var(--olive-light)}
+
+    /* ─── REVEAL ─── */
+    .r{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+    .r.on{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img src="oliv-logo.png" alt="Oliv Studio Digital"/>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#incluye">Qué Incluye</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#planes">Planes</a></li>
+  </ul>
+  <a class="nav-cta" href="#planes">Trabajemos Juntos</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tag">Agencia de Marketing Digital &amp; Community Management</div>
+  <h1>Tu marca,<br/><em>amplificada</em><br/>con intención.</h1>
+  <p class="hero-sub">Estrategia · Contenido · Publicidad · Resultados</p>
+  <p class="hero-body">
+    En Oliv Studio Digital diseñamos estrategias digitales enfocadas en resultados reales.
+    Gestión de redes, contenido que conecta, publicidad que vende.
+    <strong>Todo lo que tu marca necesita — en un solo lugar.</strong>
+  </p>
+  <a class="btn-main" href="#planes">Ver Planes</a>
+
+  <div class="hero-mockup r">
+    <div class="mc o">📱</div>
+    <div class="mc">✦</div>
+    <div class="mc g">🎯</div>
+    <div class="mc">📊</div>
+    <div class="mc b">🎨</div>
+    <div class="mc">📧</div>
+    <div class="mc">💡</div>
+    <div class="mc o">🎬</div>
+  </div>
+
+  <div class="hero-divider">Resultados que hablan</div>
+  <p class="hero-stats">
+    Más de <strong>50 marcas</strong> acompañadas &nbsp;·&nbsp;
+    <strong>+320%</strong> crecimiento orgánico promedio &nbsp;·&nbsp;
+    <strong>4× ROI</strong> en campañas de Ads
+  </p>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ti">Gestión de Redes <span>✦</span></span>
+    <span class="ti">Meta Ads &amp; Google Ads <span>✦</span></span>
+    <span class="ti">Creación de Contenido <span>✦</span></span>
+    <span class="ti">Email Marketing <span>✦</span></span>
+    <span class="ti">Video Marketing <span>✦</span></span>
+    <span class="ti">WhatsApp Business <span>✦</span></span>
+    <span class="ti">Remarketing <span>✦</span></span>
+    <span class="ti">Análisis de Métricas <span>✦</span></span>
+    <span class="ti">Community Management <span>✦</span></span>
+    <span class="ti">Gestión de Redes <span>✦</span></span>
+    <span class="ti">Meta Ads &amp; Google Ads <span>✦</span></span>
+    <span class="ti">Creación de Contenido <span>✦</span></span>
+    <span class="ti">Email Marketing <span>✦</span></span>
+    <span class="ti">Video Marketing <span>✦</span></span>
+    <span class="ti">WhatsApp Business <span>✦</span></span>
+    <span class="ti">Remarketing <span>✦</span></span>
+    <span class="ti">Análisis de Métricas <span>✦</span></span>
+    <span class="ti">Community Management <span>✦</span></span>
+  </div>
+</div>
+
+<!-- TAGLINE -->
+<div class="tagline">
+  <p>ESTRATEGIA SIMPLE. RESULTADOS REALES.</p>
+  <p>Tu agencia de marketing digital creada para quitarte el estrés de crecer en redes. Con todo resuelto por nosotros, mostrar tu marca de forma consistente nunca fue tan fácil.</p>
+</div>
+
+<!-- SERVICIOS DESTACADOS -->
+<section id="servicios" class="s sw">
+  <div class="w">
+    <div class="serv-top r">
+      <div>
+        <span class="eye">Lo que hacemos</span>
+        <h2 class="h2">Servicios diseñados<br/>para <em>crecer.</em></h2>
+        <p class="sub">Cada servicio está pensado para que tu marca no solo se vea bien — sino que convierta y crezca de forma consistente y sostenida.</p>
+        <br/><br/>
+        <a class="btn-d" href="#planes">Ver Planes</a>
+      </div>
+      <div class="serv-vis">
+        <div class="sv o">📱</div>
+        <div class="sv">🎯</div>
+        <div class="sv g">🎬</div>
+        <div class="sv">📊</div>
+      </div>
+    </div>
+
+    <div class="serv-grid r">
+      <div class="sc-card">
+        <div class="sc-n">01</div>
+        <div class="sc-icon">📱</div>
+        <div class="sc-title">Gestión de Redes Sociales</div>
+        <p class="sc-body">Manejamos tus redes de principio a fin. Estrategia, publicación, gestión de comunidad y reportes que muestran resultados reales.</p>
+      </div>
+      <div class="sc-card">
+        <div class="sc-n">02</div>
+        <div class="sc-icon">✦</div>
+        <div class="sc-title">Creación de Contenido</div>
+        <p class="sc-body">Diseño, copywriting y video que reflejan tu marca y conectan genuinamente con tu audiencia. Contenido que vende sin que parezca publicidad.</p>
+      </div>
+      <div class="sc-card">
+        <div class="sc-n">03</div>
+        <div class="sc-icon">🎯</div>
+        <div class="sc-title">Publicidad Online</div>
+        <p class="sc-body">Campañas de Meta Ads y Google Ads con segmentación precisa, creatividades que convierten y seguimiento de ROI en tiempo real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TODOS LOS SERVICIOS -->
+<section id="incluye" class="s sc">
+  <div class="w">
+    <div class="r" style="text-align:center;margin-bottom:4rem">
+      <span class="eye">Todo lo que incluimos</span>
+      <h2 class="h2 hc">Tu marca, cubierta<br/>en <em>todos los frentes.</em></h2>
+      <p class="sub subc">Ofrecemos una suite completa de servicios digitales para que no tengas que buscar en otro lado. Un equipo, una estrategia, todos los resultados.</p>
+    </div>
+    <div class="all-serv r">
+      <div class="as-item">
+        <div class="as-icon">🎯</div>
+        <div>
+          <div class="as-title">Estrategias de Marketing Digital</div>
+          <p class="as-body">Planes personalizados enfocados en resultados medibles. Cada acción tiene un propósito claro y está alineada con tus objetivos de negocio.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">📱</div>
+        <div>
+          <div class="as-title">Gestión Profesional de Redes</div>
+          <p class="as-body">Nos encargamos de todo: planificación, publicación, comunidad, respuestas y seguimiento de métricas. Vos solo mirás crecer tu marca.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">✦</div>
+        <div>
+          <div class="as-title">Creación de Contenido</div>
+          <p class="as-body">Contenido que conecta y vende. Diseño visual, copywriting estratégico y piezas adaptadas a cada plataforma: Instagram, TikTok, LinkedIn y más.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">📣</div>
+        <div>
+          <div class="as-title">Publicidad en Meta Ads y Google Ads</div>
+          <p class="as-body">Campañas optimizadas para generar ventas, leads y alcance. Segmentación precisa, creatividades de alto impacto y reportes de ROI detallados.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">🔁</div>
+        <div>
+          <div class="as-title">Campañas de Remarketing</div>
+          <p class="as-body">Recuperamos a quienes ya mostraron interés en tu marca. Estrategias de remarketing para aumentar conversiones y reducir el costo por adquisición.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">🎬</div>
+        <div>
+          <div class="as-title">Video Marketing</div>
+          <p class="as-body">Reels, stories y videos cortos que potencian tu marca. El formato de mayor alcance orgánico, ejecutado con estrategia y creatividad.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">📈</div>
+        <div>
+          <div class="as-title">Optimización de Ventas en Redes</div>
+          <p class="as-body">Convertimos tu perfil en un canal de ventas. Embudo social, social selling y estrategias de conversión directa para que tus seguidores compren.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">📧</div>
+        <div>
+          <div class="as-title">Email Marketing Estratégico</div>
+          <p class="as-body">Secuencias, newsletters y campañas de email que nutren tu audiencia y convierten suscriptores en clientes. Automatizadas y medibles.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">💬</div>
+        <div>
+          <div class="as-title">Automatización y Gestión de WhatsApp Business</div>
+          <p class="as-body">Configuramos y automatizamos tu WhatsApp Business para capturar leads, responder consultas y cerrar ventas — sin que estés pendiente las 24hs.</p>
+        </div>
+      </div>
+      <div class="as-item">
+        <div class="as-icon">📊</div>
+        <div>
+          <div class="as-title">Análisis de Métricas y Optimización</div>
+          <p class="as-body">No trabajamos a ciegas. Medimos, analizamos y optimizamos de forma continua para que cada acción mejore con el tiempo y tus resultados escalen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section id="nosotros" class="s sd">
+  <div class="w">
+    <div class="about-grid">
+      <div class="about-frame r"><div class="af-inner">✦</div></div>
+      <div class="r">
+        <span class="eye">Sobre nosotros</span>
+        <h2 class="h2" style="margin-bottom:1.5rem">Creamos presencias<br/>digitales que <em>perduran.</em></h2>
+        <p class="sub" style="margin-bottom:1rem">En Oliv Studio Digital creemos que el marketing digital no debería sentirse abrumador. Somos un equipo de estrategas y creativos apasionados por construir marcas auténticas que conectan genuinamente con su audiencia.</p>
+        <p class="sub">Nuestro enfoque combina estética refinada con estrategia basada en datos. Porque una marca que se ve bien Y genera resultados es completamente posible — y eso es exactamente lo que entregamos.</p>
+        <div class="about-q"><p>"El mejor marketing se siente como una conversación, no como una interrupción."</p></div>
+        <div class="about-nums">
+          <div class="an"><span class="an-n">3+</span><span class="an-l">Años de exp.</span></div>
+          <div class="an"><span class="an-n">50+</span><span class="an-l">Clientes activos</span></div>
+          <div class="an"><span class="an-n">4×</span><span class="an-l">ROI promedio</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="clientes" class="s sw">
+  <div class="w">
+    <div class="th r">
+      <span class="eye">[ Amor de clientes ]</span>
+      <h2 class="h2 hc">Resultados que <em>hablan.</em></h2>
+    </div>
+    <div class="tgrid r">
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">"</div>
+        <p class="tc-txt">"Desde que empezamos con Oliv Studio, nuestra presencia en Instagram creció un <strong>280% en solo 4 meses.</strong> Entienden perfectamente el alma de nuestra marca."</p>
+        <div class="tc-line"></div>
+        <div class="tc-name">María Camila R.</div>
+        <div class="tc-role">Fundadora, Tienda Alma</div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">"</div>
+        <p class="tc-txt">"Las campañas de Ads que gestionan <strong>multiplicaron por 4 nuestras ventas online.</strong> Comunicación clara, resultados reales y un equipo muy profesional."</p>
+        <div class="tc-line"></div>
+        <div class="tc-name">Jorge Luis P.</div>
+        <div class="tc-role">CEO, Nexo Inmobiliaria</div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-q">"</div>
+        <p class="tc-txt">"Por fin una agencia que entiende que menos es más. El contenido es <strong>elegante, consistente y genera engagement real.</strong> 100% recomendadas."</p>
+        <div class="tc-line"></div>
+        <div class="tc-name">Sofía V.</div>
+        <div class="tc-role">Directora Creativa, Studio Baux</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes" class="s sc">
+  <div class="w">
+    <div class="ph r">
+      <span class="eye">Elegí tu plan</span>
+      <h2 class="h2 hc">Sin contratos eternos.<br/><em>Solo resultados.</em></h2>
+      <p class="sub subc" style="margin-top:.9rem">Sin letra chica. Sin sorpresas. Empezá cuando quieras.</p>
+    </div>
+    <div class="pgrid r">
+      <div class="pc">
+        <span class="pp">Esencial</span>
+        <div class="pa">$499</div>
+        <div class="pm">por mes</div>
+        <div class="pdiv"></div>
+        <p class="pd">Ideal para marcas que están comenzando su presencia digital.</p>
+        <ul class="pl">
+          <li>Gestión de 1 red social</li>
+          <li>Estrategia de contenido mensual</li>
+          <li>12 publicaciones/mes</li>
+          <li>Diseño de piezas incluido</li>
+          <li>Reporte mensual de métricas</li>
+          <li>Soporte por WhatsApp</li>
+        </ul>
+        <a class="pbtn" href="#">Comenzar</a>
+      </div>
+      <div class="pc feat">
+        <div class="pb">Más popular</div>
+        <span class="pp">Profesional</span>
+        <div class="pa">$899</div>
+        <div class="pm">por mes</div>
+        <div class="pdiv"></div>
+        <p class="pd">Para marcas que quieren crecer de forma consistente y estratégica.</p>
+        <ul class="pl">
+          <li>Gestión de 2 redes sociales</li>
+          <li>20 publicaciones/mes + stories</li>
+          <li>Diseño + copywriting completo</li>
+          <li>1 campaña de Meta Ads o Google</li>
+          <li>Remarketing incluido</li>
+          <li>Email marketing mensual</li>
+          <li>Reporte quincenal de métricas</li>
+          <li>Reunión mensual de estrategia</li>
+        </ul>
+        <a class="pbtn" href="#">Comenzar</a>
+      </div>
+      <div class="pc">
+        <span class="pp">Premium</span>
+        <div class="pa">$1,499</div>
+        <div class="pm">por mes</div>
+        <div class="pdiv"></div>
+        <p class="pd">Solución completa para marcas que quieren dominar su mercado digital.</p>
+        <ul class="pl">
+          <li>3 redes sociales completas</li>
+          <li>Contenido ilimitado + video</li>
+          <li>Meta Ads + Google Ads activos</li>
+          <li>Remarketing multicanal</li>
+          <li>Email marketing automatizado</li>
+          <li>WhatsApp Business configurado</li>
+          <li>Análisis y optimización semanal</li>
+          <li>Acceso prioritario al equipo</li>
+        </ul>
+        <a class="pbtn" href="#">Comenzar</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:.75rem;color:var(--gray)">
+      ¿Necesitás algo a medida? <a href="mailto:hola@olivstudiodigital.com" style="color:var(--dark);font-weight:700">Contanos tu proyecto →</a>
+    </p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta">
+  <div class="cta-wm">OLIV</div>
+  <div class="r">
+    <span class="eye" style="display:block;text-align:center">¿Lista para empezar?</span>
+    <h2 class="h2 hc" style="font-size:clamp(3rem,6vw,5.5rem);margin:.6rem auto 1.5rem">Tu marca merece<br/><em>brillar.</em></h2>
+    <p class="sub subc">Da el primer paso. Conversemos sobre tu proyecto y descubramos juntas cómo hacer crecer tu presencia digital de forma auténtica y sostenida.</p>
+    <div class="cta-btns">
+      <a class="btn-d" href="#planes">Ver Planes</a>
+      <a class="btn-o" href="mailto:hola@olivstudiodigital.com">Escribirnos</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="oliv-logo.png" alt="Oliv Studio Digital"/>
+  <p>© 2025 Oliv Studio Digital. Todos los derechos reservados.</p>
+  <div class="fl">
+    <a href="#">Instagram</a>
+    <a href="#">TikTok</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Contacto</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on') });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
